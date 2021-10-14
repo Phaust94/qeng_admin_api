@@ -1,3 +1,5 @@
+[![Lines Of Code](https://tokei.rs/b1/github/Phaust94/encounter_news_bot?category=code)](https://github.com/Phaust94/encounter_news_bot)
+
 This library allows interacting with QEng admin API
 
 The usage is simple.
