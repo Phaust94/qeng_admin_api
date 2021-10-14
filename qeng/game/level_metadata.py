@@ -2,39 +2,54 @@
 Models a QEng level
 """
 
-from dataclasses import dataclass
 import typing
+
+from pydantic import BaseModel
 
 __all__ = [
     "LevelMetadata",
 ]
 
 
-@dataclass
-class LevelMetadata:
-    id: int
-    number: int
+class LevelMetadata(BaseModel):
+    level_order_number: int = None
     # Autopass time in seconds
-    max_time: int
+    autopass_time_seconds: int = None
     # Bonus for not autopass (seconds/points)
-    score: int
+    bonus_for_not_autopass: int = None
     # Time multipler in statistics
-    time_k: float
+    time_multiplier_in_stats: float = None
     # Internal name
-    working_name: str
+    in_game_name: str = None
     # DIsplay name in stats
-    name: typing.Optional[str]
+    stats_name: typing.Optional[str] = None
     # Entering this code will give a penalty up to autopass time
-    surrender_code: str
+    surrender_code: str = None
     # Task text
-    task: str
+    task_text: str = ""
     # Task script
-    script: str
+    task_script: str = None
     # Answer format
-    answer: str
+    answer_format: str = None
     # N answers allowed
-    answers_limit: int
+    answers_limit: int = None
     # N seconds for which limit is applied
-    answers_per_time: int
+    answers_limit_duration_seconds: int = None
     # If the limit is exceeded, each code will result in penalty of N seconds
-    answers_limit_penalty: int
+    answers_limit_penalty: int = None
+
+    class Config:
+        allow_population_by_field_name = True
+        fields = {
+            'level_order_number': 'number',
+            'autopass_time_seconds': 'max_time',
+            "bonus_for_not_autopass": "score",
+            "time_multiplier_in_stats": "time_k",
+            "in_game_name": "working_name",
+            "stats_name": "name",
+            "task_text": "task",
+            "task_script": "script",
+            "answer_format": "answer",
+            "answers_limit_duration_seconds": "answers_per_time",
+        }
+

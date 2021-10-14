@@ -2,7 +2,7 @@
 Models a QEng game
 """
 
-from dataclasses import dataclass
+from pydantic import BaseModel, Field
 import typing
 
 from qeng.game.level import Level
@@ -12,7 +12,6 @@ __all__ = [
 ]
 
 
-@dataclass
-class Game:
+class Game(BaseModel):
     game_id: int
-    levels: typing.List[Level]
+    levels: typing.List[Level] = Field(default_factory=list)
