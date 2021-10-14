@@ -44,7 +44,9 @@ api = QengAPI("LOGIN", 'PASSWORD')
 api.upload_level(level, GAME_ID)
 ```
 
-For updating existing levels, a level has to have a `level_order_number` parameter set on LevelMetadata.
+For updating EXISTING levels:
+
+A level has to have a `level_order_number` parameter set on LevelMetadata.
 If bonuses, hints or sectors are present - these will be completely overwritten.
 For level metadata - only the ones passed, will be updated, the rest will stay as they were
 
