@@ -46,7 +46,7 @@ class QengAPI:
         return None
 
     def upload_level(self, level: Level, game_id: int) -> None:
-        endpoint = "import_tasks.php?gid=4021&json=1"
+        endpoint = "import_tasks.php"
         level_json = level.dict(exclude_none=True, by_alias=True)
         upload_res = requests.post(
             f"{self.domain_url}/{endpoint}",

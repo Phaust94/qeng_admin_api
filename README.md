@@ -3,7 +3,7 @@ This library allows interacting with QEng admin API
 The usage is simple:
 
 ```python
-from qeng.game import Level, LevelSector, LevelMetadata
+from qeng.game import Level, LevelSector, LevelMetadata, Bonus, Hint
 from qeng import QengAPI
 
 level = Level(
@@ -24,6 +24,18 @@ level = Level(
     sectors=[
         LevelSector(name="Test sec1", codes=["dick", "vag"])
     ],
+    hints=[
+        Hint(description="test_hint2", text="Look at me go", penalty=3)
+    ],
+    bonuses=[
+        Bonus(
+            answers=["a", "b"],
+            delay_appearance_seconds=10,
+            bonus_amount=30,
+            description="this is bonus",
+            text_after_solved="this is after"
+        )
+    ]
 )
 
 GAME_ID = 80
