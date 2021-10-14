@@ -1,7 +1,8 @@
 This library allows interacting with QEng admin API
 
-The usage is simple:
+The usage is simple.
 
+For uploading NEW levels:
 ```python
 from qeng.game import Level, LevelSector, LevelMetadata, Bonus, Hint
 from qeng import QengAPI
@@ -41,4 +42,36 @@ level = Level(
 GAME_ID = 80
 api = QengAPI("LOGIN", 'PASSWORD')
 api.upload_level(level, GAME_ID)
+```
+
+For updating existing levels, a level has to have a `level_order_number` parameter set on LevelMetadata.
+If bonuses, hints or sectors are present - these will be completely overwritten.
+For level metadata - only the ones passed, will be updated, the rest will stay as they were
+
+```python
+from qeng.game import Level, LevelSector, LevelMetadata, Hint, Bonus
+from qeng import QengAPI
+
+level = Level(
+    level_metadata=LevelMetadata(
+        level_order_number=10,
+        task_text="QGJHGJHSGDJHS",
+    ),
+    sectors=[
+    ],
+    hints=[
+        Hint(description="test_hint2", text="Look at me go", penalty=3)
+    ],
+    bonuses=[
+        Bonus(
+            answers=["a", "b"],
+            delay_appearance_seconds=10,
+            text_after_solved="this is after"
+        )
+    ]
+)
+
+GAME_ID = 80
+api = QengAPI("USER", 'PASSWORD')
+api.update_level(level, GAME_ID)
 ```
