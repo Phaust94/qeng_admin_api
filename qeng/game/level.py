@@ -1,7 +1,9 @@
 """
 Models a QEng level
 """
+
 import typing
+
 from pydantic import BaseModel, Field
 
 from qeng.game.level_metadata import LevelMetadata

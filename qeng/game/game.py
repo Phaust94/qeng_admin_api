@@ -13,5 +13,13 @@ __all__ = [
 
 
 class Game(BaseModel):
-    game_id: int
+    game_metadata
     levels: typing.List[Level] = Field(default_factory=list)
+
+    class Config:
+        use_enum_values = True
+        fields = {
+            "game_metadata": "game",
+            "levels": "tasks",
+        }
+        allow_population_by_field_name = True
