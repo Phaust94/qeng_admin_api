@@ -6,6 +6,9 @@ from pydantic import BaseModel, Field
 import typing
 
 from qeng.game.level import Level
+from qeng.game.bonus import GlobalBonus
+from qeng.game.passing_sequence import PassingSequence
+from qeng.game.game_metadata import GameMetadata
 
 __all__ = [
     "Game",
@@ -13,13 +16,16 @@ __all__ = [
 
 
 class Game(BaseModel):
-    game_metadata
+    game_metadata: GameMetadata = Field(default_factory=GameMetadata)
     levels: typing.List[Level] = Field(default_factory=list)
+    global_bonuses: typing.List[GlobalBonus] = Field(default_factory=list)
+    passing_sequences: typing.List[PassingSequence] = Field(default_factory=list)
 
     class Config:
-        use_enum_values = True
         fields = {
             "game_metadata": "game",
             "levels": "tasks",
+            "global_bonuses": "gbonuses",
+            "passing_sequences": "lines",
         }
         allow_population_by_field_name = True

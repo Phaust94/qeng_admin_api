@@ -1,12 +1,13 @@
 """
 QEng API
 """
+import json
 
 import requests
 from requests.cookies import RequestsCookieJar
 from dataclasses import dataclass
 
-from qeng.game import Level
+from qeng.game import Level, Game
 
 __all__ = [
     "QengAPI",
@@ -48,7 +49,10 @@ class QengAPI:
 
     def _base_upload_level(self, level: Level, game_id: int) -> None:
         endpoint = "import_tasks.php"
-        level_json = level.dict(exclude_none=True, by_alias=True, exclude_unset=True)
+
+        level_json = level.json(exclude_none=True, by_alias=True, exclude_unset=True)
+        level_json = json.loads(level_json)
+
         upload_res = requests.post(
             f"{self.domain_url}/{endpoint}",
             params={
@@ -77,3 +81,44 @@ class QengAPI:
         """
         assert level.level_metadata.level_order_number is not None, "Can't update level without level number specified"
         return self._base_upload_level(level, game_id)
+
+    def get_game(self, game_id: int) -> Game:
+        endpoint = "game_export.php"
+
+        res = requests.get(
+            f"{self.domain_url}/{endpoint}",
+            params={
+                "gid": game_id,
+                "json": 1,
+            },
+            cookies=self._cookies,
+        )
+        res.raise_for_status()
+        game_json = res.json()
+        game_inst = Game.parse_obj(game_json)
+        return game_inst
+
+    def upload_game(self, game: Game, game_id: int, delete_existing_levels: bool = True) -> None:
+        endpoint = "import_tasks.php"
+
+        game_json = game.json(exclude_none=True, by_alias=True, exclude_unset=True)
+        game_json = json.loads(game_json)
+
+        params = {
+            "gid": game_id,
+            "json": 1,
+        }
+
+        if delete_existing_levels:
+            game_json["delete_all_tasks"] = 1
+
+        res = requests.post(
+            f"{self.domain_url}/{endpoint}",
+            params=params,
+            json=game_json,
+            cookies=self._cookies,
+        )
+        res.raise_for_status()
+        return None
+
+
