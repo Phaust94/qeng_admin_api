@@ -177,7 +177,7 @@ levels=[
     ]
 ```
 
-### Uploading a game
+### Editing and uploading a game
 
 ```python
 from qeng import QengAPI
@@ -185,6 +185,7 @@ from qeng import game as qgc
 
 api = QengAPI("USERNAME", 'PASSWORD')
 GAME_ID = 80
+# Get the gaeme first
 game = api.get_game(GAME_ID)
 # Changing game team acceptance rule
 game.game_metadata.accept_teams_rule = qgc.GameMetadataEnums.GameAcceptTeamsRule.Manually
@@ -211,5 +212,6 @@ new_level = qgc.Level(
     ]
 )
 game.levels.append(new_level)
+# Upload now
 api.upload_game(game, GAME_ID, delete_existing_levels=True)
 ```
