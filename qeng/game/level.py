@@ -17,7 +17,7 @@ __all__ = [
 
 
 class Level(BaseModel):
-    level_metadata: LevelMetadata
+    level_metadata: LevelMetadata = Field(default_factory=LevelMetadata)
     sectors: typing.List[LevelSector] = Field(default_factory=list)
     bonuses: typing.List[Bonus] = Field(default_factory=list)
     hints: typing.List[Hint] = Field(default_factory=list)
