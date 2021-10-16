@@ -96,23 +96,23 @@ print(game)
 This prints:
 ```python
 game_metadata=GameMetadata(
-scoring_type=<GameScoringType.Time: '1'>, 
-statistics_state=<GameStatisticsState.PassedLevelsOnly: '6'>,
-team_limit=3,
-name='#SECRET',
-description='<p>Test game</p>',
-finish_text='', 
-social_network_image_url='https://imagizer.imageshack.com/img923/6088/DICK.jpg',
-start_time=datetime.datetime(2028, 1, 15, 21, 0),
-end_time=datetime.datetime(2028, 1, 19, 21, 0), 
-accept_teams_rule=<GameAcceptTeamsRule.EveryoneWhoPayedAutomatically: '1'>,
-start_type=<GameStartType.Separate: '1'>,
-price=600.3,
-currency=<GameCurrency.UAH: 'UAH'>,
-game_type=<GameType.Virtual: '4'>,
-scenario_state=<GameScenarioState.Open: '1'>,
-answer_prefix='aa', 
-default_passing_sequence=''
+    scoring_type=<GameScoringType.Time: '1'>, 
+    statistics_state=<GameStatisticsState.PassedLevelsOnly: '6'>,
+    team_limit=3,
+    name='#SECRET',
+    description='<p>Test game</p>',
+    finish_text='', 
+    social_network_image_url='https://imagizer.imageshack.com/img923/6088/DICK.jpg',
+    start_time=datetime.datetime(2028, 1, 15, 21, 0),
+    end_time=datetime.datetime(2028, 1, 19, 21, 0), 
+    accept_teams_rule=<GameAcceptTeamsRule.EveryoneWhoPayedAutomatically: '1'>,
+    start_type=<GameStartType.Separate: '1'>,
+    price=600.3,
+    currency=<GameCurrency.UAH: 'UAH'>,
+    game_type=<GameType.Virtual: '4'>,
+    scenario_state=<GameScenarioState.Open: '1'>,
+    answer_prefix='aa', 
+    default_passing_sequence=''
 )
 levels=[
     Level(
