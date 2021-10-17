@@ -50,7 +50,9 @@ class GameMetadataEnums:
 
     class GameScenarioState(enum.Enum):
         Closed = '0'
-        Open = '1'
+        OpenForAll = '1'
+        OpenForPlayedPlayers = '2'
+        OpenForFinishedTeams = '3'
 
 
 class GameMetadata(BaseModel):
