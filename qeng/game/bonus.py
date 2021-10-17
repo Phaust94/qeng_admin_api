@@ -42,12 +42,12 @@ class Bonus(_BaseBonus):
 
 
 class GlobalBonus(_BaseBonus):
-    available_since_level_n: int = 0
+    available_from_level_n: int = 0
     available_to_level_n: int = 0
 
     class Config:
         fields = {
-            "available_since_level_n": "first_task_n",
+            "available_from_level_n": "first_task_n",
             "available_to_level_n": "last_task_n",
             "time_left_conversion_coefficient": "duration_k",
         }

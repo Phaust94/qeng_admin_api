@@ -60,6 +60,7 @@ class GameMetadata(BaseModel):
     name: str = "#New Unnamed Game"
     description: str = ""
     finish_text: str = ""
+    html_header: str = ""
     social_network_image_url: str = ""
     start_time: datetime.datetime = datetime.datetime(2028, 12, 29)
     end_time: datetime.datetime = datetime.datetime(2033, 12, 29)
@@ -84,7 +85,4 @@ class GameMetadata(BaseModel):
         }
         allow_population_by_field_name = True
         use_enum_values = False
-        json_encoders = {
-            datetime.datetime: str,
-        }
         validate_assignment = True

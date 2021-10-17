@@ -2,8 +2,10 @@
 Models a QEng game
 """
 
-from pydantic import BaseModel, Field
 import typing
+import datetime
+
+from pydantic import BaseModel, Field
 
 from qeng.game.level import Level
 from qeng.game.bonus import GlobalBonus
@@ -29,3 +31,6 @@ class Game(BaseModel):
             "passing_sequences": "lines",
         }
         allow_population_by_field_name = True
+        json_encoders = {
+            datetime.datetime: str,
+        }
