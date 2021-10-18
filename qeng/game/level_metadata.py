@@ -36,6 +36,8 @@ class LevelMetadata(BaseModel):
     bonus_for_not_autopass: int = None
     # Time multipler in statistics
     time_multiplier_in_stats: float = None
+    # Level availabiliy delay (for Storm games)
+    delay_level_availability_seconds: int = None
     # Internal name
     in_game_name: str = None
     # DIsplay name in stats
@@ -71,6 +73,7 @@ class LevelMetadata(BaseModel):
             'autopass_time_seconds': 'max_time',
             "bonus_for_not_autopass": "score",
             "time_multiplier_in_stats": "time_k",
+            "delay_level_availability_seconds": "delay",
             "in_game_name": "working_name",
             "stats_name": "name",
             "task_text": "task",
