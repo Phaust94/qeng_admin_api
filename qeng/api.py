@@ -95,6 +95,8 @@ class QengAPI:
         )
         res.raise_for_status()
         game_json = res.json()
+        if "error" in game_json:
+            raise ValueError(game_json["error"])
         game_inst = Game.parse_obj(game_json)
         return game_inst
 
@@ -119,6 +121,9 @@ class QengAPI:
             cookies=self._cookies,
         )
         res.raise_for_status()
+        json_data = res.json()
+        if "error" in json_data:
+            raise ValueError(json_data["error"])
         return None
 
 

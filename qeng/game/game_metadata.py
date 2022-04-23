@@ -3,6 +3,7 @@ QEng Game metadata
 """
 import datetime
 import enum
+import typing
 
 from pydantic import BaseModel
 
@@ -63,7 +64,7 @@ class GameMetadata(BaseModel):
     description: str = ""
     finish_text: str = ""
     html_header: str = ""
-    social_network_image_url: str = ""
+    social_network_image_url: typing.Optional[str] = ""
     start_time: datetime.datetime = datetime.datetime(2028, 12, 29)
     end_time: datetime.datetime = datetime.datetime(2033, 12, 29)
     accept_teams_rule: GameMetadataEnums.GameAcceptTeamsRule = GameMetadataEnums.GameAcceptTeamsRule.Manually
