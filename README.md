@@ -185,11 +185,11 @@ from qeng import game as qgc
 
 api = QengAPI("USERNAME", 'PASSWORD')
 GAME_ID = 80
-# Get the gaeme first
+# Get the game first
 game = api.get_game(GAME_ID)
 # Changing game team acceptance rule
 game.game_metadata.accept_teams_rule = qgc.GameMetadataEnums.GameAcceptTeamsRule.Manually
-# Seitching game to Red
+# Switching game to Red
 game.game_metadata.game_type = qgc.GameMetadataEnums.GameType.Red
 # Dropping all levels except first
 game.levels = game.levels[:1]
@@ -214,4 +214,16 @@ new_level = qgc.Level(
 game.levels.append(new_level)
 # Upload now
 api.upload_game(game, GAME_ID, delete_existing_levels=True)
+```
+
+### Uploading a part of a game
+
+```python
+from qeng import QengAPI
+
+api = QengAPI("USERNAME", 'PASSWORD')
+GAME_ID = 80
+game = api.get_game(GAME_ID)
+# Uploading only a part of a game
+api.upload_global_bonuses(game.global_bonuses, game_id=81)
 ```

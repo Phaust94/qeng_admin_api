@@ -2,12 +2,14 @@
 QEng API
 """
 import json
+import typing
 
+import pydantic
 import requests
 from requests.cookies import RequestsCookieJar
 from dataclasses import dataclass
 
-from qeng.game import Level, Game
+from qeng.game import Level, Game, GameMetadata, GlobalBonus, PassingSequence
 
 __all__ = [
     "QengAPI",
@@ -100,24 +102,18 @@ class QengAPI:
         game_inst = Game.parse_obj(game_json)
         return game_inst
 
-    def upload_game(self, game: Game, game_id: int, delete_existing_levels: bool = True) -> None:
+    def _upload_object(self, obj: typing.Any, game_id: int):
         endpoint = "import_tasks.php"
-
-        game_json = game.json(exclude_none=True, by_alias=True, exclude_unset=True)
-        game_json = json.loads(game_json)
 
         params = {
             "gid": game_id,
             "json": 1,
         }
 
-        if delete_existing_levels:
-            game_json["delete_all_tasks"] = 1
-
         res = requests.post(
             f"{self.domain_url}/{endpoint}",
             params=params,
-            json=game_json,
+            json=obj,
             cookies=self._cookies,
         )
         res.raise_for_status()
@@ -126,4 +122,41 @@ class QengAPI:
             raise ValueError(json_data["error"])
         return None
 
+    @staticmethod
+    def _pydantic_to_json(obj: pydantic.BaseModel) -> typing.Any:
+        obj_json = obj.json(exclude_none=True, by_alias=True, exclude_unset=True)
+        obj_json = json.loads(obj_json)
+        return obj_json
 
+    @staticmethod
+    def _map_name(obj: typing.Any, key_alias: str) -> typing.Dict[str, typing.Any]:
+        key = Game.Config.fields[key_alias]
+        obj_json = {
+            key: obj
+        }
+        return obj_json
+
+    def upload_game(self, game: Game, game_id: int, delete_existing_levels: bool = True) -> None:
+        game_json = self._pydantic_to_json(game)
+        if delete_existing_levels:
+            game_json["delete_all_tasks"] = 1
+        self._upload_object(game_json, game_id)
+        return None
+
+    def upload_game_metadata(self, game_metadata: GameMetadata, game_id: int) -> None:
+        game_metadata_json = self._pydantic_to_json(game_metadata)
+        game_metadata_json = self._map_name(game_metadata_json, "game_metadata")
+        self._upload_object(game_metadata_json, game_id)
+        return None
+
+    def upload_global_bonuses(self, global_bonuses: typing.List[GlobalBonus], game_id: int) -> None:
+        bonuses_json = [self._pydantic_to_json(b) for b in global_bonuses]
+        bonuses_json = self._map_name(bonuses_json, "global_bonuses")
+        self._upload_object(bonuses_json, game_id)
+        return None
+
+    def upload_passing_sequences(self, passing_sequences: typing.List[GlobalBonus], game_id: int) -> None:
+        passing_sequences_json = [self._pydantic_to_json(b) for b in passing_sequences]
+        passing_sequences_json = self._map_name(passing_sequences_json, "passing_sequences")
+        self._upload_object(passing_sequences_json, game_id)
+        return None
