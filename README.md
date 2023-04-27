@@ -1,5 +1,3 @@
-[![Lines Of Code](https://tokei.rs/b1/github/Phaust94/qeng_admin_api?category=code)](https://github.com/Phaust94/qeng_admin_api)
-
 This library allows interacting with QEng admin API
 
 ### Installing with pip
