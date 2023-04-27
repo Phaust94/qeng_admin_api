@@ -2,3 +2,7 @@
 secrets.py
 .idea
 tst*.py
+/*.json
+build
+dist
+*.egg-info

@@ -85,6 +85,11 @@ class QengAPI:
         return self._base_upload_level(level, game_id)
 
     def get_game(self, game_id: int) -> Game:
+        game_json = self.get_game_raw_json(game_id=game_id)
+        game_inst = Game.parse_obj(game_json)
+        return game_inst
+
+    def get_game_raw_json(self, game_id: int) -> typing.Dict[str, typing.Any]:
         endpoint = "game_export.php"
 
         res = requests.get(
@@ -99,8 +104,7 @@ class QengAPI:
         game_json = res.json()
         if "error" in game_json:
             raise ValueError(game_json["error"])
-        game_inst = Game.parse_obj(game_json)
-        return game_inst
+        return game_json
 
     def _upload_object(self, obj: typing.Any, game_id: int):
         endpoint = "import_tasks.php"

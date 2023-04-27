@@ -2,6 +2,11 @@
 
 This library allows interacting with QEng admin API
 
+### Installing with pip
+```bash
+pip install qeng-admin-api
+```
+
 ### Uploading new levels:
 
 A level has NOT to have a `level_order_number` parameter set on LevelMetadata 
